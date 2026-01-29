@@ -1,11 +1,12 @@
-#!/usr/bin/env sh
+#!/bin/sh
+set -eu
 
 echo "Installation des packages NPM"
-# installation si packages manquant
+if [ ! -d node_modules ]; then
+  npm ci --legacy-peer-deps
+fi
 
-npm ls --porcelain > /dev/null || (npm clean-install --legacy-peer-deps)
 echo "Done..."
-
 echo "Angular initialisé..."
 
-npm run serve
+exec npm run serve

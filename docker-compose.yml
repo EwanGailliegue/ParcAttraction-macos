@@ -8,7 +8,8 @@ services:
       args:
         MY_UID: ${MY_UID:-0}
         MY_GID: ${MY_GID:-0}
-    command: ./init-angular.sh
+    working_dir: /home/node/app
+    command: ["sh", "-lc", "./init-angular.sh"]
     volumes:
       - ./parc:/home/node/app
     ports: ["4200:4200"]
