@@ -6,10 +6,10 @@ ARG MY_GID
 RUN apk add chromium gettext shadow
 
 RUN deluser node
-RUN groupadd -g $MY_GID customgroup
-RUN useradd -l -u "$MY_UID" -g "$MY_GID" node
+RUN groupadd -g 1001 customgroup
+RUN useradd -l -u 115 -g 1001 node
 
-RUN chown -R "$MY_UID:$MY_GID" /home/node
+RUN chown -R 115:1001 /home/node
 
 WORKDIR /home/node/app
 

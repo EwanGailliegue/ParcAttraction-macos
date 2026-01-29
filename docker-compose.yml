@@ -20,7 +20,7 @@ services:
       context: ./python
     volumes:
       - ./python:/var/www/html/back
-    ports: ["5000:5000"]
+    ports: ["5001:5000"]
     restart: always
     # depends_on:
     #   - database
