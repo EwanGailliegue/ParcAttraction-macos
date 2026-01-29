@@ -1,12 +1,22 @@
-INSERT INTO attraction (nom, description, difficulte, visible) VALUES ('Silver Star', 'Montagne russe hypercoaster à Europa-Park (Allemagne)', 5, 1);
-INSERT INTO attraction (nom, description, difficulte, visible) VALUES ('Blue Fire', 'Montagne russe à lancement à Europa-Park (Allemagne)', 4, 1);
-INSERT INTO attraction (nom, description, difficulte, visible) VALUES ('Wodan Timburcoaster', 'Montagne russe en bois à Europa-Park (Allemagne)', 4, 1);
-INSERT INTO attraction (nom, description, difficulte, visible) VALUES ('Voltron Nevera', 'Montagne russe à propulsion multiple à Europa-Park (Allemagne)', 5, 1);
-INSERT INTO attraction (nom, description, difficulte, visible) VALUES ('Shambhala', 'Montagne russe emblématique à PortAventura Park (Espagne)', 5, 1);
-INSERT INTO attraction (nom, description, difficulte, visible) VALUES ('Dragon Khan', 'Montagne russe avec loopings à PortAventura Park (Espagne)', 5, 1);
-INSERT INTO attraction (nom, description, difficulte, visible) VALUES ('Furius Baco', 'Montagne russe accélération rapide à PortAventura Park (Espagne)', 5, 1);
-INSERT INTO attraction (nom, description, difficulte, visible) VALUES ('Toutatis', 'Montagne russe à Parc Astérix (France)', 4, 1);
-INSERT INTO attraction (nom, description, difficulte, visible) VALUES ('Untamed', 'Montagne russe à Walibi Holland (Pays-Bas)', 4, 1);
-INSERT INTO attraction (nom, description, difficulte, visible) VALUES ('Batman Gotham City Escape', 'Montagne russe à Parque Warner Madrid (Espagne)', 4, 1);
+INSERT INTO attraction (nom, description, difficulte, visible) VALUES
+('Silver Star', 'Montagne russe (Europa-Park, Allemagne)', 5, 1),
+('Blue Fire', 'Montagne russe à lancement (Europa-Park, Allemagne)', 4, 1),
+('Wodan Timburcoaster', 'Montagne russe en bois (Europa-Park, Allemagne)', 4, 1),
+('Toutatis', 'Montagne russe (Parc Astérix, France)', 5, 1),
+('OzIris', 'Montagne russe inversée (Parc Astérix, France)', 4, 1),
+('Shambhala', 'Montagne russe (PortAventura, Espagne)', 5, 1),
+('Dragon Khan', 'Montagne russe à loopings (PortAventura, Espagne)', 4, 1),
+('Grande Roue', 'Attraction panoramique familiale', 1, 1),
+('Pirates', 'Balade en bateau familiale', 1, 1),
+('Maison Hantée', 'Parcours immersif', 2, 0);
+
 
 INSERT INTO users (name, password) VALUES ('toto', 'toto');
+
+INSERT INTO critique (attraction_id, auteur, note, commentaire, visible) VALUES
+(1, 'Lucas Martin', 5, 'Incroyable, sensations fortes garanties !', 1),
+(1, NULL, 4, 'Super, mais un peu d’attente.', 1),
+(2, 'Emma Dupont', 4, 'Lancement impressionnant, très fluide.', 1),
+(4, 'Thomas Durand', 5, 'La meilleure attraction du parc.', 1),
+(8, 'Julie Petit', 5, 'Parfait pour une pause et une belle vue.', 1),
+(10, 'Anonyme', 3, 'Sympa mais pas très effrayant.', 0);
