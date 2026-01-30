@@ -1,43 +1,72 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Page administrateur pour <button mat-button (click)="addAttraction()">Ajouter</button>, modifier et supprimer des attractions</mat-card-title>
+<mat-card class="admin-card">
+  <mat-card-header class="header">
+    <mat-card-title>Administration des attractions</mat-card-title>
+    <mat-card-subtitle>Ajoute, modifie la visibilité et enregistre en une seule fois.</mat-card-subtitle>
   </mat-card-header>
+
   <mat-card-content>
-    <div class="attraction-title">
-      <div class="attraction">
-        <span>Nom de l'attraction</span>
-        <span>Description de l'attraction</span>
-        <span>Difficulté de l'attraction / 5</span>
-        <span>Visible</span>
-      </div>
-    </div>
-    <ng-container *ngIf="attractions | async">
-      <ng-container *ngFor="let formulaireAttraction of formulaireAttractions; let indexForm = index;"
-        [formGroup]="formulaireAttraction"
-        style="display: flex; flex-direction: column;"
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="addAttraction()">
+        + Ajouter une attraction
+      </button>
+
+      <button
+        mat-raised-button
+        color="accent"
+        [disabled]="!hasPendingChanges() || isSavingAll"
+        (click)="saveAll()"
       >
-        <div class="attraction">
-          <mat-form-field class="champ" appearance="fill">
-            <mat-label>Nom</mat-label>
-            <input matInput formControlName="nom">
-          </mat-form-field>
-      
-          <mat-form-field class="champ" appearance="fill">
-            <mat-label>Description</mat-label>
-            <input matInput formControlName="description">
-          </mat-form-field>
-  
-          <mat-form-field class="champ" appearance="fill">
-            <mat-label>Difficulté / 5</mat-label>
-            <input matInput formControlName="difficulte" type="number">
-          </mat-form-field>
+        {{ isSavingAll ? 'Enregistrement…' : 'Enregistrer toutes les modifications' }}
+      </button>
 
-          <mat-slide-toggle class="champ" formControlName="visible">Element visible</mat-slide-toggle>
+      <button mat-stroked-button [disabled]="isSavingAll" (click)="resetLocalChanges()">
+        Annuler les modifications
+      </button>
+    </div>
 
-          <button mat-button (click)="onSubmit(formulaireAttraction)" class="champ">Enregistrer</button>
+    <div class="table-head">
+      <div>Nom</div>
+      <div>Description</div>
+      <div>Difficulté</div>
+      <div>Visible</div>
+      <div class="state">État</div>
+    </div>
+
+    <ng-container *ngIf="attractions | async">
+      <div
+        class="row"
+        *ngFor="let f of formulaireAttractions; trackBy: trackById"
+        [formGroup]="f"
+      >
+        <mat-form-field appearance="outline" class="cell">
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="nom" />
+          <mat-error *ngIf="f.get('nom')?.hasError('required')">Nom requis</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="cell">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description" />
+          <mat-error *ngIf="f.get('description')?.hasError('required')">Description requise</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="cell small">
+          <mat-label>/ 5</mat-label>
+          <input matInput type="number" formControlName="difficulte" />
+          <mat-error *ngIf="f.get('difficulte')?.hasError('min')">Min 1</mat-error>
+          <mat-error *ngIf="f.get('difficulte')?.hasError('max')">Max 5</mat-error>
+        </mat-form-field>
+
+        <mat-slide-toggle class="toggle" formControlName="visible">
+          Visible
+        </mat-slide-toggle>
+
+        <div class="state">
+          <span class="badge new" *ngIf="!f.get('attraction_id')?.value">Nouveau</span>
+          <span class="badge dirty" *ngIf="f.get('attraction_id')?.value && f.dirty">Modifié</span>
+          <span class="badge ok" *ngIf="f.get('attraction_id')?.value && !f.dirty">OK</span>
         </div>
-      </ng-container>
+      </div>
     </ng-container>
   </mat-card-content>
 </mat-card>
-

@@ -1,24 +1,98 @@
-.attraction-title {
-  font-size: 18px;
-  font-weight: 500;
-  background-color: darkgrey;
-  width: fit-content;
-  margin-top: 25px;
+.admin-card {
+  max-width: 1200px;
+  margin: 18px auto 40px;
+  border-radius: 16px;
 }
-.attraction {
-  display: flex;
-  align-items: center;
-  column-gap: 25px;
-  width: fit-content;
 
-  border-bottom: solid 1px grey;
-  span {
-    padding: 5px;
-    width: 250px;
+.header {
+  padding-bottom: 8px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 8px 0 16px;
+}
+
+.table-head {
+  display: grid;
+  grid-template-columns: 1.1fr 2fr 0.5fr 0.6fr 0.6fr;
+  gap: 12px;
+
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.04);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1.1fr 2fr 0.5fr 0.6fr 0.6fr;
+  gap: 12px;
+  align-items: center;
+
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  margin-bottom: 10px;
+}
+
+.cell {
+  width: 100%;
+}
+
+.small {
+  max-width: 140px;
+}
+
+.toggle {
+  justify-self: start;
+}
+
+.state {
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  align-items: center;
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.badge.new {
+  background: rgba(11, 94, 215, 0.12);
+}
+
+.badge.dirty {
+  background: rgba(255, 193, 7, 0.18);
+}
+
+.badge.ok {
+  background: rgba(25, 135, 84, 0.14);
+}
+
+/* Responsive: on passe en "cards" sur mobile */
+@media (max-width: 900px) {
+  .table-head {
+    display: none;
   }
-  .champ {
-    padding: 5px;
-    margin-top: 21.5px;
-    width: 250px;
+
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .small {
+    max-width: none;
+  }
+
+  .state {
+    justify-content: flex-start;
   }
 }
