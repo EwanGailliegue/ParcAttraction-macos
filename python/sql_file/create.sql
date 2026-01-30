@@ -13,10 +13,10 @@ INSERT INTO attraction (nom, description, difficulte, visible) VALUES
 
 INSERT INTO users (name, password) VALUES ('toto', 'toto');
 
-INSERT INTO critique (attraction_id, auteur, note, commentaire, visible) VALUES
-(1, 'Lucas Martin', 5, 'Incroyable, sensations fortes garanties !', 1),
-(1, NULL, 4, 'Super, mais un peu d’attente.', 1),
-(2, 'Emma Dupont', 4, 'Lancement impressionnant, très fluide.', 1),
-(4, 'Thomas Durand', 5, 'La meilleure attraction du parc.', 1),
-(8, 'Julie Petit', 5, 'Parfait pour une pause et une belle vue.', 1),
-(10, 'Anonyme', 3, 'Sympa mais pas très effrayant.', 0);
+--INSERT INTO critique (attraction_id, auteur, note, commentaire, visible) VALUES
+--(1, 'Lucas Martin', 5, 'Incroyable, sensations fortes garanties !', 1),
+--(1, NULL, 4, 'Super, mais un peu d’attente.', 1),
+--(2, 'Emma Dupont', 4, 'Lancement impressionnant, très fluide.', 1),
+--(4, 'Thomas Durand', 5, 'La meilleure attraction du parc.', 1),
+--(8, 'Julie Petit', 5, 'Parfait pour une pause et une belle vue.', 1),
+--(10, 'Anonyme', 3, 'Sympa mais pas très effrayant.', 0);

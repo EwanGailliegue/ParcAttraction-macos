@@ -1,5 +1,31 @@
-mat-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.toolbar {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  /* mat-toolbar met déjà du bleu via color="primary".
+     Ici on harmonise + contraste. */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+}
+
+.brand {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.spacer { flex: 1; }
+
+.admin-btn {
+  background: #ffffff !important;
+  color: #0b5ed7 !important;
+  font-weight: 700;
+}
+
+.logout-btn {
+  margin-left: 10px;
+  border-color: rgba(255,255,255,0.75) !important;
+  color: #fff !important;
 }

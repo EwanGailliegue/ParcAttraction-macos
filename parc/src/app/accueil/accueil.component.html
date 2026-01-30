@@ -1,21 +1,59 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Bienvenue sur le site internet du parc d'attraction</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <div class="attraction-title">
-      <div class="attraction">
-        <span>Nom de l'attraction</span>
-        <span>Description de l'attraction</span>
-        <span>Difficulté de l'attraction / 5</span>
+<div class="page">
+  <section class="hero">
+    <h1>Attractions</h1>
+    <p class="subtitle">Recherche et filtres pour trouver rapidement ce que tu veux.</p>
+
+    <div class="filters">
+      <!-- Recherche -->
+      <div class="field">
+        <label>Recherche</label>
+        <input [(ngModel)]="search" type="text" placeholder="Ex: montagne, eau..." />
       </div>
+
+      <!-- Filtre difficulté -->
+      <div class="field">
+        <label>Difficulté min.</label>
+        <select [(ngModel)]="minDifficulty">
+          <option value="">Toutes</option>
+          <option [ngValue]="1">1+</option>
+          <option [ngValue]="2">2+</option>
+          <option [ngValue]="3">3+</option>
+          <option [ngValue]="4">4+</option>
+          <option [ngValue]="5">5</option>
+        </select>
+      </div>
+
+      <!-- Tri -->
+      <div class="field">
+        <label>Trier</label>
+        <select [(ngModel)]="sort">
+          <option value="difficulty_desc">Difficulté (desc)</option>
+          <option value="difficulty_asc">Difficulté (asc)</option>
+          <option value="name">Nom (A → Z)</option>
+        </select>
+      </div>
+
+      <button class="reset" type="button" (click)="resetFilters()">Réinitialiser</button>
     </div>
-    <ng-container *ngFor="let attraction of attractions | async;">
-      <div class="attraction">
-        <span>{{attraction.nom}}</span>
-        <span>{{attraction.description}}</span>
-        <span>{{attraction.difficulte}} / 5</span>
+  </section>
+
+  <div class="meta">{{ filtered.length }} attraction(s)</div>
+
+  <section class="grid" *ngIf="filtered.length; else empty">
+    <article class="card" *ngFor="let a of filtered">
+      <div class="card-top">
+        <h3>{{ a.nom }}</h3>
+        <span class="badge">{{ (a.difficulte ?? 0) }}/5</span>
       </div>
-    </ng-container>
-  </mat-card-content>
-</mat-card>
+      <p class="desc">{{ a.description }}</p>
+      <div class="hint">{{ difficultyLabel(a.difficulte) }}</div>
+    </article>
+  </section>
+
+  <ng-template #empty>
+    <div class="empty">
+      <h3>Aucun résultat</h3>
+      <p>Essaie un autre mot-clé ou diminue la difficulté minimale.</p>
+    </div>
+  </ng-template>
+</div>
