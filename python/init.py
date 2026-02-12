@@ -1,33 +1,23 @@
 import sqlite3
-import sys
-import re
+from pathlib import Path
 
-try:
-    import sqlite3
-    conn = sqlite3.connect("parc.db")
-    cur = conn.cursor()
-    #code ici
+BASE_DIR = Path(__file__).resolve().parent
+DB_PATH = BASE_DIR / "parc.db"
+INIT_SQL = BASE_DIR / "sql_file" / "init.sql"
+CREATE_SQL = BASE_DIR / "sql_file" / "create.sql"
 
-    with open('sql_file/init.sql') as f:
-        fichier = f.read()
-        lines = fichier.split(";")
-        for index, line in enumerate(lines):
-            line = line.replace("\n", "")
-            line = re.sub("\s+", " ", line)
-            if (line != ""):
-                texte = cur.execute(line)
 
-    with open('sql_file/create.sql') as f:
-        fichier = f.read()
-        lines = fichier.split(";")
-        for index, line in enumerate(lines):
-            line = line.replace("\n", "")
-            line = re.sub("\s+", " ", line)
-            if (line != ""):
-                texte = cur.execute(line)
-    conn.commit()
-    conn.close()
+def run_sql_file(conn: sqlite3.Connection, path: Path):
+    sql = path.read_text(encoding="utf-8")
+    conn.executescript(sql)
 
-except sqlite3.Error as e:
-    print(f"Erreur lors de la connection à la base de données: {e}")
-    sys.exit(1)
+
+if __name__ == "__main__":
+    conn = sqlite3.connect(DB_PATH)
+    try:
+        run_sql_file(conn, INIT_SQL)
+        run_sql_file(conn, CREATE_SQL)
+        conn.commit()
+        print("Base initialisée :", DB_PATH)
+    finally:
+        conn.close()

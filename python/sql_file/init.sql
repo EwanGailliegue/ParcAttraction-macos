@@ -19,13 +19,18 @@ CREATE TABLE users (
 );
 
 -- Critiques (pas de lien vers users)
--- CREATE TABLE critique (
- --   critique_id INTEGER PRIMARY KEY ASC,
---    attraction_id INTEGER NOT NULL,
---    auteur TEXT,                 -- ex: "Lucas Martin" (peut être NULL si anonyme)
---    note INTEGER NOT NULL,
---    commentaire TEXT NOT NULL,
---    visible BOOLEAN DEFAULT true,
---    created_at TEXT DEFAULT (datetime('now')),
---    FOREIGN KEY (attraction_id) REFERENCES attraction(attraction_id) ON DELETE CASCADE
---);
+CREATE TABLE critique (
+    critique_id INTEGER PRIMARY KEY ASC,
+    attraction_id INTEGER NOT NULL,
+
+    prenom TEXT,                -- NULL = anonyme
+    nom TEXT,                   -- NULL = anonyme
+
+    note INTEGER NOT NULL CHECK (note BETWEEN 1 AND 5),
+    commentaire TEXT NOT NULL,
+
+    visible BOOLEAN DEFAULT true,
+    created_at TEXT DEFAULT (datetime('now')),
+
+    FOREIGN KEY (attraction_id) REFERENCES attraction(attraction_id) ON DELETE CASCADE
+);
