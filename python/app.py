@@ -59,6 +59,13 @@ def getCritiques(index):
     result = critique.get_critiques_for_attraction(index, only_visible=True)
     return result, 200
 
+@app.get('/critiques')
+def getAllCritiques():
+    result = req.select_from_db(
+        "SELECT * FROM critique ORDER BY created_at DESC"
+    )
+    return result, 200
+
 @app.post('/attraction/<int:index>/critiques')
 def addCritique(index):
     json = request.get_json()

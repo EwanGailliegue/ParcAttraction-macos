@@ -5,12 +5,21 @@ import { FormsModule } from '@angular/forms';
 import { AttractionService } from '../Service/attraction.service';
 import { AttractionInterface } from '../Interface/attraction.interface';
 
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { CritiqueDialogComponent } from '../critique-dialog/critique-dialog.component';
+
 type SortMode = 'name' | 'difficulty_desc' | 'difficulty_asc';
 
 @Component({
   selector: 'app-accueil',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatDialogModule
+  ],
   templateUrl: './accueil.component.html',
   styleUrl: './accueil.component.scss'
 })
@@ -25,12 +34,25 @@ export class AccueilComponent implements OnInit {
   // Par défaut : on cache les attractions invisibles
   showInvisible = false;
 
-  constructor(private attractionService: AttractionService) {}
+  constructor(
+    private attractionService: AttractionService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.attractionService.getAllAttraction().subscribe({
       next: (data) => (this.attractions = data ?? []),
       error: () => (this.attractions = [])
+    });
+  }
+
+  openCritiqueDialog(a: AttractionInterface): void {
+    this.dialog.open(CritiqueDialogComponent, {
+      width: '520px',
+      data: {
+        attractionId: (a as any).attraction_id,
+        attractionNom: a.nom
+      }
     });
   }
 

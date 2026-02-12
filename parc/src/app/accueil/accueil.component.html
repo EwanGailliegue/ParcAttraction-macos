@@ -45,8 +45,17 @@
         <h3>{{ a.nom }}</h3>
         <span class="badge">{{ (a.difficulte ?? 0) }}/5</span>
       </div>
+
       <p class="desc">{{ a.description }}</p>
       <div class="hint">{{ difficultyLabel(a.difficulte) }}</div>
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="openCritiqueDialog(a)"
+      >
+        Laisser une critique
+      </button>
     </article>
   </section>
 
