@@ -51,10 +51,25 @@
 
       <!--  moyenne + nb avis -->
       <div class="rating" *ngIf="getCritiqueStat(a) as s">
-        <span *ngIf="s.count > 0">⭐ {{ s.avg }} ({{ s.count }} avis)</span>
-        <span *ngIf="s.count === 0">Aucun avis</span>
-      </div>
+        <ng-container *ngIf="s.count > 0; else noReviews">
+          <div class="stars" aria-label="note moyenne">
+            <span class="star" *ngFor="let _ of [1,2,3,4,5]; let i = index">
+              <span class="star-base">★</span>
+              <span
+                class="star-fill"
+                [style.width.%]="starFillPercent(s.avg, i + 1)"
+              >★</span>
+            </span>
+          </div>
 
+          <span class="avg">{{ formatAvg(s.avg) }}</span>
+          <span class="count">({{ s.count }} avis)</span>
+        </ng-container>
+
+        <ng-template #noReviews>
+          <span class="no-reviews">Aucun avis</span>
+        </ng-template>
+      </div>
 
       <button
         mat-stroked-button

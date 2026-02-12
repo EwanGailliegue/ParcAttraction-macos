@@ -59,6 +59,11 @@ def getCritiques(index):
     result = critique.get_critiques_for_attraction(index, only_visible=True)
     return result, 200
 
+@app.get('/attraction/<int:index>/stats')
+def getAttractionStats(index):
+    result = critique.get_stats_for_attraction(index, only_visible=True)
+    return jsonify(result), 200
+
 @app.get('/critiques')
 def getAllCritiques():
     result = req.select_from_db(
@@ -92,3 +97,17 @@ def login():
 
     result = jsonify({"token": user.encode_auth_token(list(records[0])[0]), "name": json['name']})
     return result, 200
+
+@app.get('/admin/critiques')
+def adminGetAllCritiques():
+    return critique.get_all_critiques(), 200
+
+@app.patch('/admin/critique/<int:critique_id>/visible')
+def adminSetCritiqueVisible(critique_id):
+    json = request.get_json() or {}
+    visible = bool(json.get("visible", True))
+
+    ok = critique.set_critique_visibility(critique_id, visible)
+    if ok:
+        return jsonify({"message": "Visibilité mise à jour."}), 200
+    return jsonify({"message": "Critique introuvable."}), 404

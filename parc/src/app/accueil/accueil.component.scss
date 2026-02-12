@@ -149,7 +149,50 @@
 }
 
 .rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin: 8px 0 10px 0;
-  opacity: 0.85;
   font-size: 0.95rem;
+}
+
+.stars {
+  display: inline-flex;
+  line-height: 1;
+}
+
+.star {
+  position: relative;
+  display: inline-block;
+  width: 1.05em;     // largeur d’une étoile
+  height: 1em;
+  margin-right: 1px;
+}
+
+.star-base {
+  display: block;
+  color: rgba(0, 0, 0, 0.25); // gris (étoile vide)
+}
+
+.star-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;  // permet le remplissage partiel
+  white-space: nowrap;
+  width: 0%;
+  color: #f4b400;    // “google-ish” (jaune)
+  display: block;
+}
+
+.avg {
+  font-weight: 600;
+}
+
+.count {
+  opacity: 0.75;
+}
+
+.no-reviews {
+  opacity: 0.75;
 }

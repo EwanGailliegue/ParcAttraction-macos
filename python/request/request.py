@@ -46,8 +46,10 @@ def delete_from_db(requete, data=()):
 
 def update_from_db(requete, data=()):
     cur, conn = get_db_connection()
-    
-    cur.execute(requete, data)
 
+    cur.execute(requete, data)
     conn.commit()
+
+    rowcount = cur.rowcount
     conn.close()
+    return rowcount

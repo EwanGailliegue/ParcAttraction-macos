@@ -108,6 +108,18 @@ export class AccueilComponent implements OnInit {
     });
   }
 
+  starFillPercent(avg: number, starIndex: number): number {
+    // starIndex: 1..5
+    const value = Math.max(0, Math.min(5, avg));
+    const start = starIndex - 1;
+    const fill = value - start;            // ex: avg=3.7, starIndex=4 => 0.7
+    return Math.max(0, Math.min(1, fill)) * 100;
+  }
+
+  formatAvg(avg: number): string {
+    return (Math.round(avg * 10) / 10).toFixed(1);
+  }
+
   resetFilters(): void {
     this.search = '';
     this.minDifficulty = '';
