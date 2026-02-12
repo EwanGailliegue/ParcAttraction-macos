@@ -49,12 +49,19 @@
       <p class="desc">{{ a.description }}</p>
       <div class="hint">{{ difficultyLabel(a.difficulte) }}</div>
 
+      <!--  moyenne + nb avis -->
+      <div class="rating" *ngIf="getCritiqueStat(a) as s">
+        <span *ngIf="s.count > 0">⭐ {{ s.avg }} ({{ s.count }} avis)</span>
+        <span *ngIf="s.count === 0">Aucun avis</span>
+      </div>
+
+
       <button
         mat-stroked-button
         type="button"
         (click)="openCritiqueDialog(a)"
       >
-        Laisser une critique
+        Laisser un avis / voir les avis
       </button>
     </article>
   </section>

@@ -1,4 +1,9 @@
-<h2 mat-dialog-title>Laisser une critique — {{ data.attractionNom }}</h2>
+<h2 mat-dialog-title>
+  Critiques — {{ data.attractionNom }}
+  <span class="mini" *ngIf="count">
+    • {{ count }} avis • {{ average }} / 5
+  </span>
+</h2>
 
 <div mat-dialog-content>
   <form [formGroup]="form" class="form">
@@ -30,16 +35,38 @@
 
     <mat-form-field appearance="outline" class="field">
       <mat-label>Commentaire</mat-label>
-      <textarea matInput rows="4" formControlName="commentaire"></textarea>
+      <textarea matInput rows="3" formControlName="commentaire"></textarea>
       <mat-error *ngIf="form.get('commentaire')?.hasError('required')">Commentaire obligatoire</mat-error>
       <mat-error *ngIf="form.get('commentaire')?.hasError('minlength')">Trop court</mat-error>
     </mat-form-field>
+
+    <div class="actions-inline">
+      <button mat-raised-button color="primary" type="button" [disabled]="isSaving" (click)="submit()">
+        {{ isSaving ? 'Envoi…' : 'Envoyer' }}
+      </button>
+    </div>
   </form>
+
+  <div class="divider"></div>
+
+  <h3 class="section-title">Avis existants</h3>
+
+  <div *ngIf="isLoadingCritiques" class="muted">Chargement…</div>
+
+  <div *ngIf="!isLoadingCritiques && !critiques.length" class="muted">
+    Aucun avis pour le moment. Sois le premier 👀
+  </div>
+
+  <div class="critique" *ngFor="let c of critiques">
+    <div class="critique-top">
+      <div class="name">{{ displayName(c) }}</div>
+      <div class="stars" aria-label="note">{{ stars(c.note) }}</div>
+    </div>
+    <div class="comment">{{ c.commentaire }}</div>
+    <div class="date">{{ c.created_at }}</div>
+  </div>
 </div>
 
 <div mat-dialog-actions align="end">
-  <button mat-button type="button" (click)="close()">Annuler</button>
-  <button mat-raised-button color="primary" type="button" [disabled]="isSaving" (click)="submit()">
-    {{ isSaving ? 'Envoi…' : 'Envoyer' }}
-  </button>
+  <button mat-button type="button" (click)="close()">Fermer</button>
 </div>

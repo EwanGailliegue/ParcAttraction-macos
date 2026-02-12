@@ -8,6 +8,7 @@ import { AttractionInterface } from '../Interface/attraction.interface';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { CritiqueDialogComponent } from '../critique-dialog/critique-dialog.component';
+import { CritiqueService } from '../Service/critique.service';
 
 type SortMode = 'name' | 'difficulty_desc' | 'difficulty_asc';
 
@@ -26,33 +27,84 @@ type SortMode = 'name' | 'difficulty_desc' | 'difficulty_asc';
 export class AccueilComponent implements OnInit {
   attractions: AttractionInterface[] = [];
 
+  critiqueStats: Record<number, { avg: number; count: number }> = {};
+
   // UI state
   search = '';
   minDifficulty: number | '' = '';
   sort: SortMode = 'difficulty_desc';
 
   // Par défaut : on cache les attractions invisibles
-  showInvisible = false;
+  showInvisible = false;  
 
   constructor(
     private attractionService: AttractionService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private critiqueService: CritiqueService
   ) {}
+
 
   ngOnInit(): void {
     this.attractionService.getAllAttraction().subscribe({
-      next: (data) => (this.attractions = data ?? []),
+      next: (data) => {
+        this.attractions = data ?? [];
+
+        //Charger les statistiques des critiques
+        for (const a of this.attractions) {
+          this.loadCritiqueStatsForAttraction(a);
+        }
+      },
       error: () => (this.attractions = [])
     });
   }
 
+
+
   openCritiqueDialog(a: AttractionInterface): void {
-    this.dialog.open(CritiqueDialogComponent, {
+    const ref = this.dialog.open(CritiqueDialogComponent, {
       width: '520px',
       data: {
         attractionId: (a as any).attraction_id,
         attractionNom: a.nom
       }
+    });
+
+    ref.afterClosed().subscribe((res) => {
+      if (res?.refreshStats) {
+        this.loadCritiqueStatsForAttraction(a);
+      }
+    });
+  }
+
+  private getAttractionId(a: any): number {
+    return Number(a?.attraction_id ?? a?.id ?? a?.attractionId ?? 0);
+  }
+
+  getCritiqueStat(a: any): { avg: number; count: number } | null {
+    const id = this.getAttractionId(a);
+    return this.critiqueStats[id] ?? null;
+  }
+
+  private loadCritiqueStatsForAttraction(a: any): void {
+    const id = this.getAttractionId(a);
+    if (!id) return;
+
+    this.critiqueService.getCritiques(id).subscribe({
+      next: (rows) => {
+        const critiques = rows ?? [];
+        const count = critiques.length;
+        if (!count) {
+          this.critiqueStats[id] = { avg: 0, count: 0 };
+          return;
+        }
+        const sum = critiques.reduce((acc: number, c: any) => acc + (Number(c.note) || 0), 0);
+        const avg = Math.round((sum / count) * 10) / 10;
+        this.critiqueStats[id] = { avg, count };
+      },
+      error: () => {
+        // en cas d'erreur on n'affiche rien
+        this.critiqueStats[id] = { avg: 0, count: 0 };
+      },
     });
   }
 
