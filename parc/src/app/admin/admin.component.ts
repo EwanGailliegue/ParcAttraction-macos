@@ -34,7 +34,6 @@ export class AdminComponent {
 
   public isSavingAll = false;
 
-  // NOTE: ton service s'appelle getAllAttraction() + postAttraction() (upsert)
   public attractions: Observable<AttractionInterface[]> = this.attractionService
     .getAllAttraction()
     .pipe(
@@ -69,7 +68,6 @@ export class AdminComponent {
       visible: true
     });
 
-    // On la marque "dirty" pour qu'elle soit sauvegardée par Enregistrer tout
     f.markAsDirty();
 
     this.formulaireAttractions = [f, ...this.formulaireAttractions];
@@ -108,7 +106,6 @@ export class AdminComponent {
 
     this.attractionService.postAttraction(attractionFormulaire.getRawValue()).subscribe({
       next: (result: any) => {
-        // si création, l’API renvoie result.result = id
         if (!attractionFormulaire.get('attraction_id')?.value && result?.result) {
           attractionFormulaire.patchValue({ attraction_id: result.result });
         }
@@ -129,7 +126,6 @@ export class AdminComponent {
       return;
     }
 
-    // Si certains sont invalides, on le signale clairement
     const invalids = this.formulaireAttractions.filter(f => (f.dirty || !f.get('attraction_id')?.value) && f.invalid);
     if (invalids.length > 0) {
       invalids.forEach(f => f.markAllAsTouched());
@@ -171,9 +167,9 @@ export class AdminComponent {
         });
 
         if (ko === 0) {
-          this._snackBar.open(`✅ ${ok} attraction(s) enregistrée(s)`, undefined, { duration: 1400 });
+          this._snackBar.open(`${ok} attraction(s) enregistrée(s)`, undefined, { duration: 1400 });
         } else {
-          this._snackBar.open(`⚠️ ${ok} enregistrée(s), ${ko} en erreur`, undefined, { duration: 2000 });
+          this._snackBar.open(`${ok} enregistrée(s), ${ko} en erreur`, undefined, { duration: 2000 });
         }
       });
   }

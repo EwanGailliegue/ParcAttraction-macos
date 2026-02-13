@@ -3,7 +3,7 @@
   "info": {
     "title": "Parc Attraction API",
     "version": "1.0.0",
-    "description": "API du projet Parc d'attraction (attractions, auth, critiques, stats, modération)."
+    "description": "API Parc d'attraction"
   },
   "servers": [
     { "url": "https://api", "description": "Nginx (Docker) / HTTPS" },

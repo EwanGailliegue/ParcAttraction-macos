@@ -49,7 +49,6 @@
       <p class="desc">{{ a.description }}</p>
       <div class="hint">{{ difficultyLabel(a.difficulte) }}</div>
 
-      <!--  moyenne + nb avis -->
       <div class="rating" *ngIf="getCritiqueStat(a) as s">
         <ng-container *ngIf="s.count > 0; else noReviews">
           <div class="stars" aria-label="note moyenne">

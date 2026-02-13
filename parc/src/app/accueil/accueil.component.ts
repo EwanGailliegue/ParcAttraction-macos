@@ -109,10 +109,9 @@ export class AccueilComponent implements OnInit {
   }
 
   starFillPercent(avg: number, starIndex: number): number {
-    // starIndex: 1..5
     const value = Math.max(0, Math.min(5, avg));
     const start = starIndex - 1;
-    const fill = value - start;            // ex: avg=3.7, starIndex=4 => 0.7
+    const fill = value - start;
     return Math.max(0, Math.min(1, fill)) * 100;
   }
 
@@ -128,8 +127,6 @@ export class AccueilComponent implements OnInit {
   }
 
   private isAttractionVisible(a: AttractionInterface): boolean {
-    // Si ton interface est boolean → OK
-    // Si jamais l'API renvoie 0/1, `Boolean(0)` => false, `Boolean(1)` => true
     return Boolean((a as any).visible ?? true);
   }
 

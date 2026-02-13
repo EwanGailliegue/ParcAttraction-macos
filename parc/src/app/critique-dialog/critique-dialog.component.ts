@@ -151,7 +151,6 @@ export class CritiqueDialogComponent implements OnInit {
   }
 
   close(): void {
-    // on informe le parent qu'il doit recalculer les stats si on a ajouté une critique
     this.dialogRef.close({ refreshStats: this.hasChanged });
   }
 }
