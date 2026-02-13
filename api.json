@@ -1,0 +1,263 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Parc Attraction API",
+    "version": "1.0.0",
+    "description": "API du projet Parc d'attraction (attractions, auth, critiques, stats, modération)."
+  },
+  "servers": [
+    { "url": "https://api", "description": "Nginx (Docker) / HTTPS" },
+    { "url": "http://localhost:5001", "description": "Dev local (port forward docker-compose)" }
+  ],
+  "tags": [
+    { "name": "Auth", "description": "Authentification" },
+    { "name": "Attractions", "description": "Gestion des attractions" },
+    { "name": "Critiques", "description": "Avis/critique sur une attraction" },
+    { "name": "Admin", "description": "Endpoints d'administration (modération)" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Token JWT: Authorization: Bearer <token>"
+      }
+    },
+    "schemas": {
+      "Attraction": {
+        "type": "object",
+        "properties": {
+          "attraction_id": { "type": "integer", "example": 1 },
+          "nom": { "type": "string", "example": "Silver Star" },
+          "description": { "type": "string", "example": "Montagne russe (Europa-Park, Allemagne)" },
+          "difficulte": { "type": "integer", "minimum": 1, "maximum": 5, "example": 5 },
+          "visible": { "type": "integer", "enum": [0, 1], "example": 1 }
+        },
+        "required": ["nom", "description"]
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "example": "toto" },
+          "password": { "type": "string", "example": "toto" }
+        },
+        "required": ["name", "password"]
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "token": { "type": "string", "example": "eyJhbGciOi..." },
+          "message": { "type": "string", "example": "Connexion réussie" }
+        }
+      },
+      "Critique": {
+        "type": "object",
+        "properties": {
+          "critique_id": { "type": "integer", "example": 7 },
+          "attraction_id": { "type": "integer", "example": 1 },
+          "prenom": { "type": ["string", "null"], "example": "Ewan" },
+          "nom": { "type": ["string", "null"], "example": "Gailliegue" },
+          "note": { "type": "integer", "minimum": 1, "maximum": 5, "example": 4 },
+          "commentaire": { "type": "string", "example": "super rigolo!" },
+          "visible": { "type": "integer", "enum": [0, 1], "example": 1 },
+          "created_at": { "type": "string", "example": "2026-02-12 19:27:38" }
+        },
+        "required": ["attraction_id", "note", "commentaire"]
+      },
+      "CreateCritiqueRequest": {
+        "type": "object",
+        "properties": {
+          "prenom": { "type": ["string", "null"], "example": "Ewan" },
+          "nom": { "type": ["string", "null"], "example": "Gailliegue" },
+          "note": { "type": "integer", "minimum": 1, "maximum": 5, "example": 4 },
+          "commentaire": { "type": "string", "example": "super rigolo!" }
+        },
+        "required": ["note", "commentaire"]
+      },
+      "AttractionStats": {
+        "type": "object",
+        "properties": {
+          "attraction_id": { "type": "integer", "example": 1 },
+          "count": { "type": "integer", "example": 3 },
+          "avg": { "type": "number", "example": 4.3 }
+        },
+        "required": ["attraction_id", "count", "avg"]
+      },
+      "SetVisibleRequest": {
+        "type": "object",
+        "properties": {
+          "visible": { "type": "boolean", "example": false }
+        },
+        "required": ["visible"]
+      },
+      "MessageResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string", "example": "OK" },
+          "result": { "type": ["integer", "string", "object", "null"] }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Connexion",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/LoginRequest" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/LoginResponse" } } }
+          },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+
+    "/attraction": {
+      "get": {
+        "tags": ["Attractions"],
+        "summary": "Lister toutes les attractions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Attraction" } }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Attractions"],
+        "summary": "Créer / mettre à jour une attraction",
+        "description": "Selon votre backend, ce endpoint peut servir à insérer ou mettre à jour (upsert) une attraction.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/Attraction" } }
+          }
+        },
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/MessageResponse" } } } },
+          "400": { "description": "Bad Request" }
+        }
+      }
+    },
+
+    "/attraction/{id}": {
+      "get": {
+        "tags": ["Attractions"],
+        "summary": "Obtenir une attraction",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Attraction" } } } },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "delete": {
+        "tags": ["Attractions"],
+        "summary": "Supprimer une attraction",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/MessageResponse" } } } },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+
+    "/attraction/{id}/critiques": {
+      "get": {
+        "tags": ["Critiques"],
+        "summary": "Lister les critiques visibles d'une attraction",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Critique" } } } }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Critiques"],
+        "summary": "Ajouter une critique à une attraction",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateCritiqueRequest" } } }
+        },
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/MessageResponse" } } } },
+          "400": { "description": "Bad Request" }
+        }
+      }
+    },
+
+    "/attraction/{id}/stats": {
+      "get": {
+        "tags": ["Critiques"],
+        "summary": "Statistiques des critiques visibles (moyenne + nombre) pour une attraction",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AttractionStats" } } }
+          }
+        }
+      }
+    },
+
+    "/admin/critiques": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Lister toutes les critiques (visibles et invisibles)",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Critique" } } } }
+          },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+
+    "/admin/critique/{critique_id}/visible": {
+      "patch": {
+        "tags": ["Admin"],
+        "summary": "Changer la visibilité d'une critique",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "critique_id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SetVisibleRequest" } } }
+        },
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/MessageResponse" } } } },
+          "404": { "description": "Not Found" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    }
+  }
+}
