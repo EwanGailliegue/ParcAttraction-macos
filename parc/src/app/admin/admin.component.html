@@ -1,72 +1,91 @@
-<mat-card class="admin-card">
-  <mat-card-header class="header">
-    <mat-card-title>Administration des attractions</mat-card-title>
-    <mat-card-subtitle>Ajoute, modifie la visibilité et enregistre en une seule fois.</mat-card-subtitle>
-  </mat-card-header>
+<div class="admin-page">
+  <mat-card class="admin-card">
+    <mat-card-header class="header">
+      <div class="header-left">
+        <mat-card-title>Administration des attractions</mat-card-title>
+        <mat-card-subtitle>Ajoute, modifie la visibilité et enregistre en une seule fois.</mat-card-subtitle>
+      </div>
 
-  <mat-card-content>
-    <div class="actions">
-      <button mat-raised-button color="primary" (click)="addAttraction()">
-        + Ajouter une attraction
-      </button>
+      <div class="header-right">
+        <span class="hint-pill" *ngIf="hasPendingChanges()">Modifications en attente</span>
+        <span class="hint-pill ok" *ngIf="!hasPendingChanges()">Tout est à jour</span>
+      </div>
+    </mat-card-header>
 
-      <button
-        mat-raised-button
-        color="accent"
-        [disabled]="!hasPendingChanges() || isSavingAll"
-        (click)="saveAll()"
-      >
-        {{ isSavingAll ? 'Enregistrement…' : 'Enregistrer toutes les modifications' }}
-      </button>
+    <mat-card-content>
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <button mat-raised-button color="primary" (click)="addAttraction()">
+            + Ajouter une attraction
+          </button>
 
-      <button mat-stroked-button [disabled]="isSavingAll" (click)="resetLocalChanges()">
-        Annuler les modifications
-      </button>
-    </div>
+          <button
+            mat-raised-button
+            color="accent"
+            [disabled]="!hasPendingChanges() || isSavingAll"
+            (click)="saveAll()"
+          >
+            {{ isSavingAll ? 'Enregistrement…' : 'Enregistrer' }}
+          </button>
 
-    <div class="table-head">
-      <div>Nom</div>
-      <div>Description</div>
-      <div>Difficulté</div>
-      <div>Visible</div>
-      <div class="state">État</div>
-    </div>
+          <button mat-stroked-button [disabled]="isSavingAll" (click)="resetLocalChanges()">
+            Annuler
+          </button>
+        </div>
 
-    <ng-container *ngIf="attractions | async">
-      <div
-        class="row"
-        *ngFor="let f of formulaireAttractions; trackBy: trackById"
-        [formGroup]="f"
-      >
-        <mat-form-field appearance="outline" class="cell">
-          <mat-label>Nom</mat-label>
-          <input matInput formControlName="nom" />
-          <mat-error *ngIf="f.get('nom')?.hasError('required')">Nom requis</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="cell">
-          <mat-label>Description</mat-label>
-          <input matInput formControlName="description" />
-          <mat-error *ngIf="f.get('description')?.hasError('required')">Description requise</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="cell small">
-          <mat-label>/ 5</mat-label>
-          <input matInput type="number" formControlName="difficulte" />
-          <mat-error *ngIf="f.get('difficulte')?.hasError('min')">Min 1</mat-error>
-          <mat-error *ngIf="f.get('difficulte')?.hasError('max')">Max 5</mat-error>
-        </mat-form-field>
-
-        <mat-slide-toggle class="toggle" formControlName="visible">
-          Visible
-        </mat-slide-toggle>
-
-        <div class="state">
-          <span class="badge new" *ngIf="!f.get('attraction_id')?.value">Nouveau</span>
-          <span class="badge dirty" *ngIf="f.get('attraction_id')?.value && f.dirty">Modifié</span>
-          <span class="badge ok" *ngIf="f.get('attraction_id')?.value && !f.dirty">OK</span>
+        <div class="toolbar-right">
+          <span class="meta">{{ formulaireAttractions.length }} ligne(s)</span>
         </div>
       </div>
-    </ng-container>
-  </mat-card-content>
-</mat-card>
+
+      <div class="table">
+        <div class="table-head">
+          <div>Nom</div>
+          <div>Description</div>
+          <div>Difficulté</div>
+          <div>Visible</div>
+          <div class="state">État</div>
+        </div>
+
+        <ng-container *ngIf="attractions | async">
+          <div
+            class="row"
+            *ngFor="let f of formulaireAttractions; trackBy: trackById"
+            [formGroup]="f"
+          >
+            <mat-form-field appearance="outline" class="cell">
+              <mat-label>Nom</mat-label>
+              <input matInput formControlName="nom" />
+              <mat-error *ngIf="f.get('nom')?.hasError('required')">Nom requis</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="cell">
+              <mat-label>Description</mat-label>
+              <input matInput formControlName="description" />
+              <mat-error *ngIf="f.get('description')?.hasError('required')">Description requise</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="cell small">
+              <mat-label>/ 5</mat-label>
+              <input matInput type="number" formControlName="difficulte" />
+              <mat-error *ngIf="f.get('difficulte')?.hasError('min')">Min 1</mat-error>
+              <mat-error *ngIf="f.get('difficulte')?.hasError('max')">Max 5</mat-error>
+            </mat-form-field>
+
+            <div class="cell toggle-wrap">
+              <mat-slide-toggle class="toggle" formControlName="visible">
+                Visible
+              </mat-slide-toggle>
+            </div>
+
+            <div class="state">
+              <span class="badge new" *ngIf="!f.get('attraction_id')?.value">Nouveau</span>
+              <span class="badge dirty" *ngIf="f.get('attraction_id')?.value && f.dirty">Modifié</span>
+              <span class="badge ok" *ngIf="f.get('attraction_id')?.value && !f.dirty">OK</span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

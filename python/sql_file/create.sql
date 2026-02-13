@@ -1,14 +1,50 @@
 INSERT INTO attraction (nom, description, difficulte, visible) VALUES
-('Silver Star', 'Montagne russe (Europa-Park, Allemagne)', 5, 1),
-('Blue Fire', 'Montagne russe à lancement (Europa-Park, Allemagne)', 4, 1),
-('Wodan Timburcoaster', 'Montagne russe en bois (Europa-Park, Allemagne)', 4, 1),
-('Toutatis', 'Montagne russe (Parc Astérix, France)', 5, 1),
+-- Europa-Park (Allemagne)
+('Silver Star', 'Montagne russe hypercoaster de 73m (Europa-Park, Allemagne)', 5, 1),
+('Blue Fire', 'Montagne russe à lancement magnétique (Europa-Park, Allemagne)', 4, 1),
+('Wodan Timburcoaster', 'Montagne russe en bois de 40m (Europa-Park, Allemagne)', 4, 1),
+('Arthur', 'Parcours scénique interactif 4D (Europa-Park, Allemagne)', 2, 1),
+
+-- Parc Astérix (France)
+('Toutatis', 'Montagne russe extrême avec 3 lanceurs (Parc Astérix, France)', 5, 1),
 ('OzIris', 'Montagne russe inversée (Parc Astérix, France)', 4, 1),
-('Shambhala', 'Montagne russe (PortAventura, Espagne)', 5, 1),
-('Dragon Khan', 'Montagne russe à loopings (PortAventura, Espagne)', 4, 1),
-('Grande Roue', 'Attraction panoramique familiale', 1, 1),
-('Pirates', 'Balade en bateau familiale', 1, 1),
-('Maison Hantée', 'Parcours immersif', 2, 0);
+('Tonnerre de Zeus', 'Grande montagne russe en bois (Parc Astérix, France)', 4, 1),
+('Le Vol d''Icare', 'Tour de chute libre panoramique (Parc Astérix, France)', 3, 1),
+
+-- PortAventura (Espagne)
+('Shambhala', 'Hypercoaster de 76m, plus haute d''Europe (PortAventura, Espagne)', 5, 1),
+('Dragon Khan', 'Montagne russe à 8 inversions (PortAventura, Espagne)', 4, 1),
+('Red Force', 'Accélération 0-180 km/h en 5 secondes (Ferrari Land, Espagne)', 5, 1),
+('Furius Baco', 'Lancement à 135 km/h (PortAventura, Espagne)', 4, 1),
+
+-- Disneyland Paris (France)
+('Big Thunder Mountain', 'Montagne russe dans une mine (Disneyland Paris, France)', 3, 1),
+('Space Mountain', 'Voyage spatial à grande vitesse (Disneyland Paris, France)', 4, 1),
+('Tower of Terror', 'Chute libre dans un hôtel hanté (Walt Disney Studios, France)', 4, 1),
+('Crush''s Coaster', 'Montagne russe spinning aquatique (Walt Disney Studios, France)', 3, 1),
+
+-- Efteling (Pays-Bas)
+('Baron 1898', 'Plongée verticale de 37m (Efteling, Pays-Bas)', 4, 1),
+('Joris en de Draak', 'Double montagne russe en bois (Efteling, Pays-Bas)', 3, 1),
+('Symbolica', 'Parcours scénique fantasmagorique (Efteling, Pays-Bas)', 1, 1),
+
+-- Alton Towers (Royaume-Uni)
+('The Smiler', 'Record du monde avec 14 inversions (Alton Towers, UK)', 5, 1),
+('Nemesis', 'Montagne russe inversée légendaire (Alton Towers, UK)', 4, 1),
+('Wicker Man', 'Montagne russe en bois avec effets de feu (Alton Towers, UK)', 4, 1),
+
+-- Phantasialand (Allemagne)
+('Taron', 'Double lancement magnétique (Phantasialand, Allemagne)', 4, 1),
+('Black Mamba', 'Montagne russe inversée suspendue (Phantasialand, Allemagne)', 4, 1),
+('F.L.Y.', 'Première montagne russe volante avec launch (Phantasialand, Allemagne)', 4, 1),
+
+-- Attractions familiales variées
+('Grande Roue', 'Attraction panoramique familiale classique', 1, 1),
+('Carrousel', 'Manège traditionnel pour toute la famille', 1, 1),
+('Train Fantôme', 'Parcours immersif dans le noir', 2, 1),
+('Bateau Pirate', 'Balancier géant thématique', 2, 1),
+('Tasses Tournantes', 'Attraction rotative familiale', 1, 1),
+('Rivière Sauvage', 'Descente aquatique avec éclaboussures', 2, 1);     
 
 INSERT INTO users (name, password) VALUES ('toto', 'toto');
 
