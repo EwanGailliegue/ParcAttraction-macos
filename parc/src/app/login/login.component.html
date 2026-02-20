@@ -1,18 +1,18 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Connexion à la page administrateur</mat-card-title>
+    <mat-card-title>{{ 'LOGIN.TITLE' | translate }}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="form" (ngSubmit)="login()" class="formulaire">
       <mat-form-field appearance="fill">
-        <mat-label>Nom</mat-label>
+        <mat-label>{{ 'LOGIN.NAME' | translate }}</mat-label>
         <input matInput formControlName="name">
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>Mot de passe</mat-label>
+        <mat-label>{{ 'LOGIN.PASSWORD' | translate }}</mat-label>
         <input matInput formControlName="password">
       </mat-form-field>
-      <button mat-stroked-button type="submit">Connexion</button>
+      <button mat-stroked-button type="submit">{{ 'LOGIN.SUBMIT' | translate }}</button>
     </form>
   </mat-card-content>
 </mat-card>

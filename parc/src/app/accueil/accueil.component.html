@@ -1,20 +1,20 @@
 <div class="page">
   <section class="hero">
-    <h1>Attractions</h1>
-    <p class="subtitle">Recherche et filtres pour trouver rapidement ce que tu veux.</p>
+    <h1>{{ 'HOME.TITLE' | translate }}</h1>
+    <p class="subtitle">{{ 'HOME.SUBTITLE' | translate }}</p>
 
     <div class="filters">
       <!-- Recherche -->
       <div class="field">
-        <label>Recherche</label>
-        <input [(ngModel)]="search" type="text" placeholder="Ex: montagne, eau..." />
+        <label>{{ 'HOME.SEARCH' | translate }}</label>
+        <input [(ngModel)]="search" type="text" [placeholder]="'HOME.SEARCH_PLACEHOLDER' | translate" />
       </div>
 
       <!-- Filtre difficulté -->
       <div class="field">
-        <label>Difficulté min.</label>
+        <label>{{ 'HOME.MIN_DIFFICULTY' | translate }}</label>
         <select [(ngModel)]="minDifficulty">
-          <option value="">Toutes</option>
+          <option value="">{{ 'HOME.ALL' | translate }}</option>
           <option [ngValue]="1">1+</option>
           <option [ngValue]="2">2+</option>
           <option [ngValue]="3">3+</option>
@@ -25,19 +25,19 @@
 
       <!-- Tri -->
       <div class="field">
-        <label>Trier</label>
+        <label>{{ 'HOME.SORT' | translate }}</label>
         <select [(ngModel)]="sort">
-          <option value="difficulty_desc">Difficulté (desc)</option>
-          <option value="difficulty_asc">Difficulté (asc)</option>
-          <option value="name">Nom (A → Z)</option>
+          <option value="difficulty_desc">{{ 'HOME.SORT_DIFF_DESC' | translate }}</option>
+          <option value="difficulty_asc">{{ 'HOME.SORT_DIFF_ASC' | translate }}</option>
+          <option value="name">{{ 'HOME.SORT_NAME' | translate }}</option>
         </select>
       </div>
 
-      <button class="reset" type="button" (click)="resetFilters()">Réinitialiser</button>
+      <button class="reset" type="button" (click)="resetFilters()">{{ 'HOME.RESET' | translate }}</button>
     </div>
   </section>
 
-  <div class="meta">{{ filtered.length }} attraction(s)</div>
+  <div class="meta">{{ filtered.length }} {{ 'HOME.COUNT' | translate }}</div>
 
   <section class="grid" *ngIf="filtered.length; else empty">
     <article class="card" *ngFor="let a of filtered">
@@ -62,11 +62,11 @@
           </div>
 
           <span class="avg">{{ formatAvg(s.avg) }}</span>
-          <span class="count">({{ s.count }} avis)</span>
+          <span class="count">({{ s.count }} {{ 'HOME.REVIEWS' | translate }})</span>
         </ng-container>
 
         <ng-template #noReviews>
-          <span class="no-reviews">Aucun avis</span>
+          <span class="no-reviews">{{ 'HOME.NO_REVIEWS' | translate }}</span>
         </ng-template>
       </div>
 
@@ -75,15 +75,15 @@
         type="button"
         (click)="openCritiqueDialog(a)"
       >
-        Laisser un avis / voir les avis
+        {{ 'HOME.LEAVE_REVIEW' | translate }}
       </button>
     </article>
   </section>
 
   <ng-template #empty>
     <div class="empty">
-      <h3>Aucun résultat</h3>
-      <p>Essaie un autre mot-clé ou diminue la difficulté minimale.</p>
+      <h3>{{ 'HOME.NO_RESULT_TITLE' | translate }}</h3>
+      <p>{{ 'HOME.NO_RESULT_DESC' | translate }}</p>
     </div>
   </ng-template>
 </div>

@@ -23,4 +23,12 @@ export class CritiqueService {
   getCritiques(attractionId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/attraction/${attractionId}/critiques`);
   }
+
+  getAllCritiques(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/admin/critiques`);
+  }
+
+  setCritiqueVisibility(critiqueId: number, visible: boolean): Observable<any> {
+    return this.http.patch(`${this.baseUrl}/admin/critique/${critiqueId}/visible`, { visible });
+  }
 }

@@ -628,3 +628,171 @@ $info-bg: #dbeafe;
     }
   }
 }
+
+
+// ============================================
+// MODÉRATION DES COMMENTAIRES
+// ============================================
+
+.critiques-card {
+  margin-top: 32px;
+}
+
+.loading-msg {
+  padding: 32px;
+  text-align: center;
+  color: $slate-500;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.critiques-list {
+  padding: 0 32px 32px;
+}
+
+.critique-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 16px;
+  border: 2px solid $slate-200;
+  margin-bottom: 12px;
+  background: $white;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideIn 300ms ease-out backwards;
+
+  @for $i from 1 through 30 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 25}ms;
+    }
+  }
+
+  &:hover {
+    border-color: $primary-blue;
+    box-shadow:
+      0 8px 30px rgba($primary-blue, 0.12),
+      0 0 0 1px rgba($primary-blue, 0.08);
+    transform: translateY(-2px);
+  }
+
+  &.hidden-critique {
+    opacity: 0.6;
+    border-color: $slate-300;
+    background: $slate-50;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+.critique-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.critique-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.critique-author {
+  font-weight: 800;
+  font-size: 15px;
+  color: $slate-800;
+}
+
+.critique-stars {
+  color: #f59e0b;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.critique-attraction {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: $info-bg;
+  color: darken($info-blue, 10%);
+  border: 1px solid rgba($info-blue, 0.2);
+}
+
+.critique-date {
+  font-size: 13px;
+  color: $slate-400;
+  font-weight: 500;
+  margin-left: auto;
+}
+
+.critique-comment {
+  font-size: 14px;
+  color: $slate-700;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.critique-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 110px;
+}
+
+.toggle-vis-btn {
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  border-radius: 12px !important;
+  padding: 0 20px !important;
+  height: 38px;
+  transition: all 200ms ease !important;
+
+  &.hide-btn {
+    border-color: #ef4444 !important;
+    color: #ef4444 !important;
+
+    &:hover:not([disabled]) {
+      background: #fef2f2 !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(#ef4444, 0.2);
+    }
+  }
+
+  &.show-btn {
+    border-color: $success-blue !important;
+    color: $success-blue !important;
+
+    &:hover:not([disabled]) {
+      background: $success-bg !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba($success-blue, 0.2);
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .critiques-list {
+    padding: 0 20px 24px;
+  }
+
+  .critique-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .critique-actions {
+    flex-direction: row;
+    min-width: unset;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .critique-date {
+    margin-left: 0;
+  }
+}

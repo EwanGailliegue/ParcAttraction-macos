@@ -1,28 +1,28 @@
 <h2 mat-dialog-title>
-  Critiques — {{ data.attractionNom }}
+  {{ 'CRITIQUE.TITLE' | translate }} — {{ data.attractionNom }}
   <span class="mini" *ngIf="count">
-    • {{ count }} avis • {{ average }} / 5
+    • {{ count }} {{ 'CRITIQUE.REVIEWS_COUNT' | translate }} • {{ average }} / 5
   </span>
 </h2>
 
 <div mat-dialog-content>
   <form [formGroup]="form" class="form">
-    <mat-checkbox formControlName="anonyme">Publier anonymement</mat-checkbox>
+    <mat-checkbox formControlName="anonyme">{{ 'CRITIQUE.ANONYMOUS' | translate }}</mat-checkbox>
 
     <div class="row">
       <mat-form-field appearance="outline" class="field">
-        <mat-label>Prénom</mat-label>
+        <mat-label>{{ 'CRITIQUE.FIRST_NAME' | translate }}</mat-label>
         <input matInput formControlName="prenom" />
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="field">
-        <mat-label>Nom</mat-label>
+        <mat-label>{{ 'CRITIQUE.LAST_NAME' | translate }}</mat-label>
         <input matInput formControlName="nom" />
       </mat-form-field>
     </div>
 
     <mat-form-field appearance="outline" class="field">
-      <mat-label>Note</mat-label>
+      <mat-label>{{ 'CRITIQUE.RATING' | translate }}</mat-label>
       <mat-select formControlName="note">
         <mat-option [value]="1">1</mat-option>
         <mat-option [value]="2">2</mat-option>
@@ -30,31 +30,31 @@
         <mat-option [value]="4">4</mat-option>
         <mat-option [value]="5">5</mat-option>
       </mat-select>
-      <mat-error *ngIf="form.get('note')?.hasError('required')">Note obligatoire</mat-error>
+      <mat-error *ngIf="form.get('note')?.hasError('required')">{{ 'CRITIQUE.RATING_REQUIRED' | translate }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="field">
-      <mat-label>Commentaire</mat-label>
+      <mat-label>{{ 'CRITIQUE.COMMENT' | translate }}</mat-label>
       <textarea matInput rows="3" formControlName="commentaire"></textarea>
-      <mat-error *ngIf="form.get('commentaire')?.hasError('required')">Commentaire obligatoire</mat-error>
-      <mat-error *ngIf="form.get('commentaire')?.hasError('minlength')">Trop court</mat-error>
+      <mat-error *ngIf="form.get('commentaire')?.hasError('required')">{{ 'CRITIQUE.COMMENT_REQUIRED' | translate }}</mat-error>
+      <mat-error *ngIf="form.get('commentaire')?.hasError('minlength')">{{ 'CRITIQUE.COMMENT_TOO_SHORT' | translate }}</mat-error>
     </mat-form-field>
 
     <div class="actions-inline">
       <button mat-raised-button color="primary" type="button" [disabled]="isSaving" (click)="submit()">
-        {{ isSaving ? 'Envoi…' : 'Envoyer' }}
+        {{ isSaving ? ('CRITIQUE.SENDING' | translate) : ('CRITIQUE.SEND' | translate) }}
       </button>
     </div>
   </form>
 
   <div class="divider"></div>
 
-  <h3 class="section-title">Avis existants</h3>
+  <h3 class="section-title">{{ 'CRITIQUE.EXISTING_REVIEWS' | translate }}</h3>
 
-  <div *ngIf="isLoadingCritiques" class="muted">Chargement…</div>
+  <div *ngIf="isLoadingCritiques" class="muted">{{ 'CRITIQUE.LOADING' | translate }}</div>
 
   <div *ngIf="!isLoadingCritiques && !critiques.length" class="muted">
-    Aucun avis pour le moment. Sois le premier 👀
+    {{ 'CRITIQUE.NO_REVIEWS_YET' | translate }}
   </div>
 
   <div class="critique" *ngFor="let c of critiques">
@@ -68,5 +68,5 @@
 </div>
 
 <div mat-dialog-actions align="end">
-  <button mat-button type="button" (click)="close()">Fermer</button>
+  <button mat-button type="button" (click)="close()">{{ 'CRITIQUE.CLOSE' | translate }}</button>
 </div>

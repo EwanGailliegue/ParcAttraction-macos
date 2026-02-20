@@ -1,13 +1,17 @@
 <mat-toolbar class="toolbar" color="primary">
-  <a routerLink="/accueil" class="brand">Parc d'attraction</a>
+  <a routerLink="/accueil" class="brand">{{ 'NAV.BRAND' | translate }}</a>
 
   <span class="spacer"></span>
 
-  <a mat-button routerLink="/accueil">Accueil</a>
-  <a mat-raised-button class="admin-btn" routerLink="/admin">Admin</a>
+  <a mat-button routerLink="/accueil">{{ 'NAV.HOME' | translate }}</a>
+  <a mat-raised-button class="admin-btn" routerLink="/admin">{{ 'NAV.ADMIN' | translate }}</a>
+
+  <button mat-stroked-button class="lang-btn" (click)="toggleLanguage()">
+    {{ currentLang === 'fr' ? '🇬🇧 EN' : '🇫🇷 FR' }}
+  </button>
 
   <button *ngIf="authService.isLoggedIn" mat-stroked-button class="logout-btn" (click)="logout()">
-    Déconnexion
+    {{ 'NAV.LOGOUT' | translate }}
   </button>
 </mat-toolbar>
 

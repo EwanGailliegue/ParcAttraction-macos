@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { CritiqueService } from '../Service/critique.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 type Critique = {
   critique_id: number;
@@ -34,6 +35,7 @@ type Critique = {
     MatButtonModule,
     MatSelectModule,
     MatCheckboxModule,
+    TranslateModule,
   ],
   templateUrl: './critique-dialog.component.html',
   styleUrl: './critique-dialog.component.scss',
@@ -57,6 +59,7 @@ export class CritiqueDialogComponent implements OnInit {
     private fb: FormBuilder,
     private critiqueService: CritiqueService,
     private dialogRef: MatDialogRef<CritiqueDialogComponent>,
+    private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) public data: { attractionId: number; attractionNom: string }
   ) {
     this.form.get('anonyme')?.valueChanges.subscribe((isAnon) => {
@@ -145,7 +148,7 @@ export class CritiqueDialogComponent implements OnInit {
       },
       error: () => {
         this.isSaving = false;
-        alert("Erreur lors de l'envoi de la critique.");
+        alert(this.translate.instant('CRITIQUE.ERROR_SENDING'));
       },
     });
   }

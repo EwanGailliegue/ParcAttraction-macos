@@ -9,6 +9,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { CritiqueDialogComponent } from '../critique-dialog/critique-dialog.component';
 import { CritiqueService } from '../Service/critique.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 type SortMode = 'name' | 'difficulty_desc' | 'difficulty_asc';
 
@@ -19,7 +20,8 @@ type SortMode = 'name' | 'difficulty_desc' | 'difficulty_asc';
     CommonModule,
     FormsModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    TranslateModule
   ],
   templateUrl: './accueil.component.html',
   styleUrl: './accueil.component.scss'
@@ -40,7 +42,8 @@ export class AccueilComponent implements OnInit {
   constructor(
     private attractionService: AttractionService,
     private dialog: MatDialog,
-    private critiqueService: CritiqueService
+    private critiqueService: CritiqueService,
+    private translate: TranslateService
   ) {}
 
 
@@ -164,10 +167,10 @@ export class AccueilComponent implements OnInit {
 
   difficultyLabel(d?: number | null): string {
     const v = d ?? 0;
-    if (v <= 1) return 'Très facile';
-    if (v === 2) return 'Facile';
-    if (v === 3) return 'Moyen';
-    if (v === 4) return 'Difficile';
-    return 'Très difficile';
+    if (v <= 1) return this.translate.instant('HOME.DIFFICULTY_VERY_EASY');
+    if (v === 2) return this.translate.instant('HOME.DIFFICULTY_EASY');
+    if (v === 3) return this.translate.instant('HOME.DIFFICULTY_MEDIUM');
+    if (v === 4) return this.translate.instant('HOME.DIFFICULTY_HARD');
+    return this.translate.instant('HOME.DIFFICULTY_VERY_HARD');
   }
 }
