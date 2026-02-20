@@ -1,0 +1,82 @@
+<div class="admin-page">
+
+  <!-- BACK + HEADER -->
+  <div class="page-header">
+    <button mat-stroked-button class="back-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      {{ 'ADMIN.BACK' | translate }}
+    </button>
+    <h1 class="page-title">{{ 'MODERATION.TITLE' | translate }}</h1>
+    <p class="page-subtitle">{{ 'MODERATION.SUBTITLE' | translate }}</p>
+  </div>
+
+  <!-- CARD -->
+  <mat-card class="panel moderation-panel">
+    <div class="panel-header">
+      <div class="panel-icon moderation-icon">
+        <mat-icon>rate_review</mat-icon>
+      </div>
+      <div class="panel-title-wrap">
+        <h2 class="panel-title">{{ 'MODERATION.TITLE' | translate }}</h2>
+        <p class="panel-subtitle">{{ 'MODERATION.SUBTITLE' | translate }}</p>
+      </div>
+      <div class="panel-status">
+        <button mat-stroked-button class="refresh-btn" (click)="loadCritiques()">
+          <mat-icon>refresh</mat-icon>
+          {{ 'MODERATION.REFRESH' | translate }}
+        </button>
+        <span class="meta">{{ critiques.length }} {{ 'MODERATION.COMMENTS' | translate }}</span>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <div *ngIf="isLoadingCritiques" class="loading-msg">
+        {{ 'MODERATION.LOADING' | translate }}
+      </div>
+
+      <div *ngIf="!isLoadingCritiques && critiques.length === 0" class="loading-msg">
+        {{ 'MODERATION.NO_COMMENTS' | translate }}
+      </div>
+
+      <div class="critiques-list" *ngIf="!isLoadingCritiques && critiques.length > 0">
+        <div
+          class="critique-row"
+          *ngFor="let c of critiques"
+          [class.hidden-critique]="!c.visible"
+        >
+          <div class="critique-main">
+            <div class="critique-header">
+              <span class="critique-author">{{ displayAuthor(c) }}</span>
+              <span class="critique-stars">{{ stars(c.note) }}</span>
+              <span class="critique-attraction">{{ getAttractionName(c.attraction_id) }}</span>
+              <span class="critique-date">{{ c.created_at }}</span>
+            </div>
+            <div class="critique-comment">{{ c.commentaire }}</div>
+          </div>
+
+          <div class="critique-actions">
+            <span
+              class="badge"
+              [class.ok]="c.visible"
+              [class.dirty]="!c.visible"
+            >
+              {{ c.visible ? ('MODERATION.VISIBLE' | translate) : ('MODERATION.HIDDEN' | translate) }}
+            </span>
+
+            <button
+              mat-stroked-button
+              class="toggle-vis-btn"
+              [class.hide-btn]="c.visible"
+              [class.show-btn]="!c.visible"
+              [disabled]="togglingIds.has(c.critique_id)"
+              (click)="toggleCritiqueVisibility(c)"
+            >
+              {{ c.visible ? ('MODERATION.HIDE' | translate) : ('MODERATION.SHOW' | translate) }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+</div>

@@ -30,6 +30,9 @@
     "DIFFICULTY_VERY_HARD": "Very hard"
   },
   "ADMIN": {
+    "PAGE_TITLE": "Administration",
+    "PAGE_SUBTITLE": "Manage your attractions and moderate reviews.",
+    "BACK": "Back",
     "TITLE": "Attractions Management",
     "SUBTITLE": "Add, change visibility, and save all at once.",
     "PENDING": "Pending changes",

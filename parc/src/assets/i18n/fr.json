@@ -30,6 +30,9 @@
     "DIFFICULTY_VERY_HARD": "Très difficile"
   },
   "ADMIN": {
+    "PAGE_TITLE": "Administration",
+    "PAGE_SUBTITLE": "Gérez vos attractions et modérez les avis.",
+    "BACK": "Retour",
     "TITLE": "Administration des attractions",
     "SUBTITLE": "Ajoute, modifie la visibilité et enregistre en une seule fois.",
     "PENDING": "Modifications en attente",

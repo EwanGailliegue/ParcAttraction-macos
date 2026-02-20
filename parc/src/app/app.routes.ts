@@ -1,6 +1,8 @@
 import { Router, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
+import { AdminAttractionsComponent } from './admin-attractions/admin-attractions.component';
+import { AdminModerationComponent } from './admin-moderation/admin-moderation.component';
 import { AuthService } from './Service/auth.service';
 import { inject } from '@angular/core';
 import { AccueilComponent } from './accueil/accueil.component';
@@ -26,6 +28,16 @@ export const routes: Routes = [
     {
       path: 'admin',
       component: AdminComponent,
+      canActivate: [utilisateurEstConnecte]
+    },
+    {
+      path: 'admin/attractions',
+      component: AdminAttractionsComponent,
+      canActivate: [utilisateurEstConnecte]
+    },
+    {
+      path: 'admin/moderation',
+      component: AdminModerationComponent,
       canActivate: [utilisateurEstConnecte]
     },
     {

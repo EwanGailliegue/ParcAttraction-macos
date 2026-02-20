@@ -1,0 +1,103 @@
+<div class="admin-page">
+
+  <!-- BACK + HEADER -->
+  <div class="page-header">
+    <button mat-stroked-button class="back-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      {{ 'ADMIN.BACK' | translate }}
+    </button>
+    <h1 class="page-title">{{ 'ADMIN.TITLE' | translate }}</h1>
+    <p class="page-subtitle">{{ 'ADMIN.SUBTITLE' | translate }}</p>
+  </div>
+
+  <!-- CARD -->
+  <mat-card class="panel attractions-panel">
+    <div class="panel-header">
+      <div class="panel-icon attractions-icon">
+        <mat-icon>attractions</mat-icon>
+      </div>
+      <div class="panel-title-wrap">
+        <h2 class="panel-title">{{ 'ADMIN.TITLE' | translate }}</h2>
+        <p class="panel-subtitle">{{ 'ADMIN.SUBTITLE' | translate }}</p>
+      </div>
+      <div class="panel-status">
+        <span class="hint-pill" *ngIf="hasPendingChanges()">{{ 'ADMIN.PENDING' | translate }}</span>
+        <span class="hint-pill ok" *ngIf="!hasPendingChanges()">{{ 'ADMIN.UP_TO_DATE' | translate }}</span>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <button mat-raised-button color="primary" (click)="addAttraction()">
+            {{ 'ADMIN.ADD' | translate }}
+          </button>
+          <button
+            mat-raised-button
+            color="accent"
+            [disabled]="!hasPendingChanges() || isSavingAll"
+            (click)="saveAll()"
+          >
+            {{ isSavingAll ? ('ADMIN.SAVING' | translate) : ('ADMIN.SAVE' | translate) }}
+          </button>
+          <button mat-stroked-button [disabled]="isSavingAll" (click)="resetLocalChanges()">
+            {{ 'ADMIN.CANCEL' | translate }}
+          </button>
+        </div>
+        <div class="toolbar-right">
+          <span class="meta">{{ formulaireAttractions.length }} {{ 'ADMIN.ROWS' | translate }}</span>
+        </div>
+      </div>
+
+      <div class="table">
+        <div class="table-head">
+          <div>{{ 'ADMIN.NAME' | translate }}</div>
+          <div>{{ 'ADMIN.DESCRIPTION' | translate }}</div>
+          <div>{{ 'ADMIN.DIFFICULTY' | translate }}</div>
+          <div>{{ 'ADMIN.VISIBLE' | translate }}</div>
+          <div class="state">{{ 'ADMIN.STATE' | translate }}</div>
+        </div>
+
+        <ng-container *ngIf="attractions | async">
+          <div
+            class="row"
+            *ngFor="let f of formulaireAttractions; trackBy: trackById"
+            [formGroup]="f"
+          >
+            <mat-form-field appearance="outline" class="cell">
+              <mat-label>{{ 'ADMIN.NAME' | translate }}</mat-label>
+              <input matInput formControlName="nom" />
+              <mat-error *ngIf="f.get('nom')?.hasError('required')">{{ 'ADMIN.NAME_REQUIRED' | translate }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="cell">
+              <mat-label>{{ 'ADMIN.DESCRIPTION' | translate }}</mat-label>
+              <input matInput formControlName="description" />
+              <mat-error *ngIf="f.get('description')?.hasError('required')">{{ 'ADMIN.DESC_REQUIRED' | translate }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="cell small">
+              <mat-label>/ 5</mat-label>
+              <input matInput type="number" formControlName="difficulte" />
+              <mat-error *ngIf="f.get('difficulte')?.hasError('min')">{{ 'ADMIN.MIN_1' | translate }}</mat-error>
+              <mat-error *ngIf="f.get('difficulte')?.hasError('max')">{{ 'ADMIN.MAX_5' | translate }}</mat-error>
+            </mat-form-field>
+
+            <div class="cell toggle-wrap">
+              <mat-slide-toggle class="toggle" formControlName="visible">
+                {{ 'ADMIN.VISIBLE' | translate }}
+              </mat-slide-toggle>
+            </div>
+
+            <div class="state">
+              <span class="badge new" *ngIf="!f.get('attraction_id')?.value">{{ 'ADMIN.NEW' | translate }}</span>
+              <span class="badge dirty" *ngIf="f.get('attraction_id')?.value && f.dirty">{{ 'ADMIN.MODIFIED' | translate }}</span>
+              <span class="badge ok" *ngIf="f.get('attraction_id')?.value && !f.dirty">{{ 'ADMIN.OK' | translate }}</span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </mat-card>
+
+</div>

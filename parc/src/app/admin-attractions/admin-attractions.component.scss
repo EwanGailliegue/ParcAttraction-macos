@@ -1,0 +1,420 @@
+// ============================================
+// PALETTE
+// ============================================
+$primary-blue: #2563eb;
+$primary-blue-light: #3b82f6;
+$primary-blue-dark: #1e40af;
+$accent-blue: #0ea5e9;
+$sky-blue: #e0f2fe;
+$light-blue: #dbeafe;
+$pale-blue: #eff6ff;
+$white: #ffffff;
+$slate-50: #f8fafc;
+$slate-100: #f1f5f9;
+$slate-200: #e2e8f0;
+$slate-300: #cbd5e1;
+$slate-400: #94a3b8;
+$slate-500: #64748b;
+$slate-600: #475569;
+$slate-700: #334155;
+$slate-800: #1e293b;
+
+$success-blue: #0284c7;
+$success-bg: #e0f2fe;
+$warning-blue: #0891b2;
+$warning-bg: #cffafe;
+$info-blue: #3b82f6;
+$info-bg: #dbeafe;
+
+// ============================================
+// PAGE
+// ============================================
+
+.admin-page {
+  min-height: 100vh;
+  padding: 32px 24px 64px;
+  background: linear-gradient(135deg, $pale-blue 0%, $white 50%, $sky-blue 100%);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 300px;
+    background: linear-gradient(180deg, rgba($primary-blue, 0.08) 0%, transparent 100%);
+    pointer-events: none;
+  }
+}
+
+.page-header {
+  max-width: 1400px;
+  margin: 0 auto 32px;
+  position: relative;
+  text-align: center;
+  animation: fadeDown 500ms ease-out;
+}
+
+.back-btn {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+  border: 2px solid $slate-300 !important;
+  color: $slate-700 !important;
+  background: $white !important;
+  transition: all 200ms ease !important;
+
+  mat-icon {
+    font-size: 20px;
+    margin-right: 4px;
+  }
+
+  &:hover {
+    border-color: $primary-blue !important;
+    color: $primary-blue !important;
+    background: $pale-blue !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($primary-blue, 0.15);
+  }
+}
+
+.page-title {
+  font-size: 36px;
+  font-weight: 900;
+  color: $slate-800;
+  letter-spacing: -0.03em;
+  margin: 0 0 8px;
+}
+
+.page-subtitle {
+  font-size: 16px;
+  color: $slate-500;
+  font-weight: 500;
+  margin: 0;
+}
+
+// ============================================
+// PANEL
+// ============================================
+
+.panel {
+  max-width: 1400px;
+  margin: 0 auto;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow:
+    0 1px 3px rgba($primary-blue, 0.08),
+    0 20px 40px rgba($primary-blue, 0.10),
+    0 0 0 1px rgba($primary-blue, 0.05);
+  background: $white;
+  animation: slideUp 450ms ease-out backwards;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 32px;
+  border-bottom: 1px solid $slate-200;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, $primary-blue 0%, $accent-blue 50%, $primary-blue-light 100%);
+  }
+}
+
+.panel-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, $primary-blue, $accent-blue);
+  box-shadow: 0 4px 12px rgba($primary-blue, 0.3);
+
+  mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    color: $white;
+  }
+}
+
+.panel-title-wrap { flex: 1; min-width: 0; }
+.panel-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: $slate-800;
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+}
+.panel-subtitle {
+  font-size: 14px;
+  color: $slate-500;
+  font-weight: 500;
+  margin: 0;
+}
+
+.panel-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.panel-body { padding: 0; }
+
+// ============================================
+// PILLS & META
+// ============================================
+
+.hint-pill {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 2px solid $warning-blue;
+  background: linear-gradient(135deg, $warning-bg, lighten($warning-bg, 3%));
+  color: darken($warning-blue, 10%);
+  box-shadow: 0 2px 8px rgba($warning-blue, 0.15);
+  white-space: nowrap;
+
+  &.ok {
+    border-color: $success-blue;
+    background: linear-gradient(135deg, $success-bg, lighten($success-bg, 3%));
+    color: darken($success-blue, 10%);
+    box-shadow: 0 2px 8px rgba($success-blue, 0.15);
+  }
+}
+
+.meta {
+  color: $slate-600;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 8px 16px;
+  background: $white;
+  border-radius: 8px;
+  border: 1px solid $slate-200;
+  white-space: nowrap;
+}
+
+// ============================================
+// TOOLBAR
+// ============================================
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 24px 32px;
+  padding: 20px;
+  background: $slate-50;
+  border-radius: 16px;
+  border: 1px solid $slate-200;
+}
+
+.toolbar-left {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  button {
+    font-weight: 600;
+    text-transform: none;
+    border-radius: 12px;
+    padding: 0 24px;
+    height: 44px;
+    transition: all 200ms ease;
+
+    &[color="primary"] {
+      background: linear-gradient(135deg, $primary-blue, $primary-blue-light);
+      box-shadow: 0 4px 12px rgba($primary-blue, 0.25);
+      &:hover:not([disabled]) {
+        background: linear-gradient(135deg, $primary-blue-dark, $primary-blue);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba($primary-blue, 0.35);
+      }
+    }
+
+    &[color="accent"] {
+      background: linear-gradient(135deg, $accent-blue, lighten($accent-blue, 5%));
+      color: $white;
+      box-shadow: 0 4px 12px rgba($accent-blue, 0.25);
+      &:hover:not([disabled]) {
+        background: linear-gradient(135deg, darken($accent-blue, 5%), $accent-blue);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba($accent-blue, 0.35);
+      }
+      &[disabled] { background: $slate-200; color: $slate-400; box-shadow: none; }
+    }
+
+    &[mat-stroked-button] {
+      border: 2px solid $slate-300;
+      color: $slate-700;
+      background: $white;
+      &:hover:not([disabled]) {
+        border-color: $primary-blue;
+        color: $primary-blue;
+        background: $pale-blue;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba($primary-blue, 0.15);
+      }
+    }
+  }
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+// ============================================
+// TABLE
+// ============================================
+
+.table {
+  display: block;
+  padding: 0 32px 32px;
+}
+
+.table-head {
+  display: grid;
+  grid-template-columns: 1.1fr 2fr 0.55fr 0.7fr 0.6fr;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, $primary-blue, $primary-blue-light);
+  color: $white;
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+  position: sticky;
+  top: 16px;
+  z-index: 10;
+  box-shadow: 0 4px 20px rgba($primary-blue, 0.25);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1.1fr 2fr 0.55fr 0.7fr 0.6fr;
+  gap: 16px;
+  align-items: center;
+  padding: 20px;
+  border-radius: 16px;
+  border: 2px solid $slate-200;
+  margin-bottom: 12px;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  background: $white;
+  position: relative;
+  animation: slideUp 300ms ease-out backwards;
+
+  @for $i from 1 through 20 {
+    &:nth-child(#{$i}) { animation-delay: #{$i * 30}ms; }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: $primary-blue;
+    border-radius: 16px 0 0 16px;
+    opacity: 0;
+    transition: opacity 250ms ease;
+  }
+
+  &:hover {
+    border-color: $primary-blue;
+    box-shadow: 0 8px 30px rgba($primary-blue, 0.15);
+    transform: translateY(-2px);
+    &::before { opacity: 1; }
+  }
+
+  &.ng-dirty {
+    border-color: $warning-blue;
+    background: linear-gradient(90deg, $warning-bg 0%, $white 10%);
+  }
+}
+
+.cell { width: 100%; }
+.small { max-width: 140px; }
+.toggle-wrap { display: flex; align-items: center; }
+.state { display: flex; justify-content: flex-start; gap: 8px; align-items: center; }
+
+// ============================================
+// BADGES
+// ============================================
+
+.badge {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  &.new {
+    background: linear-gradient(135deg, $info-bg, lighten($info-bg, 3%));
+    color: darken($info-blue, 10%);
+    border-color: rgba($info-blue, 0.3);
+  }
+  &.dirty {
+    background: linear-gradient(135deg, $warning-bg, lighten($warning-bg, 3%));
+    color: darken($warning-blue, 10%);
+    border-color: rgba($warning-blue, 0.3);
+  }
+  &.ok {
+    background: linear-gradient(135deg, $success-bg, lighten($success-bg, 3%));
+    color: darken($success-blue, 10%);
+    border-color: rgba($success-blue, 0.3);
+  }
+}
+
+// ============================================
+// ANIMATIONS
+// ============================================
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// ============================================
+// RESPONSIVE
+// ============================================
+
+@media (max-width: 900px) {
+  .admin-page { padding: 16px 12px 40px; }
+  .page-title { font-size: 28px; }
+  .page-header { margin-bottom: 24px; }
+  .back-btn { position: relative; margin-bottom: 16px; }
+  .panel-header { padding: 20px; flex-wrap: wrap; gap: 12px; }
+  .panel-status { width: 100%; justify-content: flex-end; }
+  .toolbar { margin: 16px 20px; padding: 16px; flex-direction: column; align-items: flex-start; }
+  .toolbar-left { width: 100%; button { flex: 1; min-width: 120px; } }
+  .toolbar-right { width: 100%; justify-content: flex-end; }
+  .table { padding: 0 20px 24px; }
+  .table-head { display: none; }
+  .row { grid-template-columns: 1fr; gap: 12px; padding: 16px; }
+  .small { max-width: none; }
+}
